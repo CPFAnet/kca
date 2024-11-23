@@ -1,0 +1,73 @@
+KAFKA CLUSTER ADMINISTRATOR KCA HANDBOOK
+
+#3.6
+oss_server.properties
+###
+process.roles=broker,controller
+node.id=1 
+controller.quorum.voters=1@xxx.xxx.xxx.xxx:yyy
+listeners=PLAINTEXT://xxx.xxx.xxx.xxx:yyy,CONTROLLER://xxx.xxx.xxx.xxx:yyy
+inter.broker.listener.name=PLAINTEXT 
+advertised.listeners=PLAINTEXT:///xxx.xxx.xxx.xxx:yyy 
+controller.listener.names=CONTROLLER log.dirs=/your_path
+###
+
+#3.7
+oss_server.properties
+process.roles=broker,controller 
+node.id=1
+controller.quorum.voters=1@xxx.xxx.xxx.xxx:yyy,2@xxx.xxx.xxx.xxx:yyy, 3@xxx.xxx.xxx.xxx:yyy
+listeners=PLAINTEXT://xxx.xxx.xxx.xxx:yyy,CONTROLLER://xxx.xxx.xxx.xxx:yyy
+inter.broker.listener.name=PLAINTEXT 
+advertised.listeners=PLAINTEXT://xxx.xxx.xxx.xxx:yyy 
+controller.listener.names=CONTROLLER
+num.network.threads=3 num.io.threads=8
+num.partitions=6 
+num.recovery.threads.per.data.dir=1 
+socket.send.buffer.bytes=102400 
+socket.receive.buffer.bytes=102400 
+socket.request.max.bytes=104857600
+log.dirs=/your_path
+offsets.topic.replication.factor=3 
+transaction.state.log.replication.factor=3 
+transaction.state.log.min.isr=3
+log.retention.hours=168 log.segment.bytes=1073741824 
+log.retention.check.interval.ms=300000
+###
+
+#10.1
+oss_server_ssl.properties
+### 
+node.id=1 
+broker.rack=RACK_01.PR
+controller.quorum.voters=1@xxx.xxx.xxx:yyy, 2@xxx.xxx.xxx:yyy, 3@xxx.xxx.xxx:yyy
+listeners=SSL://xxx.xxx.xxx:yyy,CONTROLLER://1xxx.xxx.xxx:yyy
+inter.broker.listener.name=SSL advertised.listeners=SSL://xxx.xxx.xxx:yyy 
+controller.listener.names=CONTROLLER
+num.network.threads=N 
+num.io.threads=N
+num.partitions=N 
+num.recovery.threads.per.data.dir=N
+socket.send.buffer.bytes=N
+socket.receive.buffer.bytes=N 
+socket.request.max.bytes=n
+log.dirs=/ayour_path 
+log.retention.hours=N 
+log.segment.bytes=N
+log.retention.check.interval.ms=N
+offsets.topic.replication.factor=N
+transaction.state.log.replication.factor=N 
+transaction.state.log.min.isr=N
+ssl.keystore.location=/your_pem
+ssl.keystore.password=your_pass
+ssl.key.password=your_pass
+ssl.truststore.location=/your_trust_store
+ssl.truststore.password=your_pass
+ssl.client.auth=required
+quorum.auth.enable=true
+quorum.auth.mechanism=SSL
+quorum.listener.name=SSL quorum.ssl.keystore.location=/your_pem
+quorum.ssl.key.password=your_pass
+quorum.ssl.truststore.location=/your_pem
+###
+
