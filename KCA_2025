@@ -125,3 +125,18 @@ while IFS= read -r line; do
     fi
 done < "$TEMP_FILE"
 ###
+
+kafka-jmx-config.yml
+###
+---
+rules:
+  - pattern: "kafka.server<type=(.+), name=(.+)><>Value" name: "kafka_server_$1_$2"
+    type: GAUGE
+    help: "Kafka server metric $1 $2"
+  - pattern: "java.lang<type=GarbageCollector, name=(.+)><>CollectionCount"
+    name: "jvm_gc_collection_count_$1" type: COUNTER
+    help: "JVM Garbage Collection Count $1"
+  - pattern: "java.lang<type=Memory><>HeapMemoryUsage" name: "jvm_memory_heap_usage"
+    type: GAUGE
+    help: "JVM Heap Memory Usage"
+###
