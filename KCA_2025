@@ -97,3 +97,31 @@ quorum.ssl.keystore.location=/your_pem
 quorum.ssl.key.password=your_pass
 quorum.ssl.truststore.location=/your_pem
 ###
+
+kafka_consumer_lag_monitor.sh
+###
+#!/bin/bash
+BOOTSTRAP_SERVER="xxx.xxx.xxx:yyy,xxx.xxx.xxx:yyy" 
+GROUP_NAME="perf-consumer-7869" 
+LOG_FILE="/your_monitor.log" 
+TEMP_FILE="/your_temp_log"
+LAG_THRESHOLD=500000
+$KAFKA_HOME/bin/kafka-consumer-groups.sh --bootstrap-server $BOOTSTRAP_SERVER --describe --group $GROUP_NAME > $TEMP_FILE 2>> $LOG_FILE
+# Check if the command executed successfully 
+if [ $? -ne 0 ]; then
+    echo "[$(date)] Error: Failed to fetch consumer group details. Check Kafka brokers or configuration." | tee -a $LOG_FILE
+    exit 1 
+fi
+
+while IFS= read -r line; do
+    if [[ "$line" =~ ^GROUP|^Consumer\ group ]]; then
+        continue 
+    fi
+    TOPIC=$(echo $line | awk '{print $2}')
+    PARTITION=$(echo $line | awk '{print $3}')
+    LAG=$(echo $line | awk '{print $6}')
+    if [[ "$LAG" =~ ^[0-9]+$ && "$LAG" -ge "$LAG_THRESHOLD" ]]; then
+        echo "[$(date)] ALERT: High Consumer Lag detected! Group: $GROUP_NAME, Topic: $TOPIC, Partition: $PARTITION, Lag: $LAG" | tee -a $LOG_FILE
+    fi
+done < "$TEMP_FILE"
+###
