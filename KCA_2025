@@ -71,3 +71,29 @@ quorum.ssl.key.password=your_pass
 quorum.ssl.truststore.location=/your_pem
 ###
 
+#10.4
+oss_server_ssl_scram.properties 
+###
+process.roles=broker,controller
+node.id=1 
+broker.rack=your_rack
+controller.quorum.voters=1@xxx.xxx.xxx:yyy, 2@1xxx.xxx.xxx:yyy, 3@xxx.xxx.xxx:yyy
+listeners=SASL_SSL://xxx.xxx.xxx:yyy, CONTROLLER://xxx.xxx.xxx:yyy
+inter.broker.listener.name=SASL_SSL advertised.listeners=SASL_SSL://xxx.xxx.xxx:yyy 
+controller.listener.names=CONTROLLER
+sasl.enabled.mechanisms=SCRAM-SHA-256 s
+asl.mechanism.inter.broker.protocol=SCRAM-SHA-256
+sasl.scram.login.callback.handler.class= rg.apache.kafka.common.security.scram.ScramLoginModule
+ssl.keystore.location=/your_pem
+ssl.keystore.password=your_pass
+ssl.key.password=your_pass
+ssl.truststore.location=/your_pem
+ssl.truststore.password=/your_pass
+ssl.client.auth=required
+quorum.auth.enable=true 
+quorum.auth.mechanism=SSL 
+quorum.listener.name=SSL
+quorum.ssl.keystore.location=/your_pem
+quorum.ssl.key.password=your_pass
+quorum.ssl.truststore.location=/your_pem
+###
