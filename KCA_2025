@@ -98,11 +98,31 @@ quorum.ssl.key.password=your_pass
 quorum.ssl.truststore.location=/your_pem
 ###
 
+krb5.conf
+###
+[libdefaults]
+    default_realm = EXAMPLE.COM
+    dns_lookup_realm = false
+    dns_lookup_kdc = false
+    ticket_lifetime = 24h
+    renew_lifetime = 7d
+    forwardable = true
+[realms]
+    EXAMPLE.COM = {
+    kdc = xxx.xxx.xxx
+    kdc = xxx.xxx.xxx
+    admin_server = xxx.xxx.xxx
+    }
+[domain_realm]
+    .example.com = EXAMPLE.COM
+    example.com = EXAMPLE.COM
+###
+
 kafka_consumer_lag_monitor.sh
 ###
 #!/bin/bash
 BOOTSTRAP_SERVER="xxx.xxx.xxx:yyy,xxx.xxx.xxx:yyy" 
-GROUP_NAME="perf-consumer-7869" 
+GROUP_NAME="perf-consumer-NNNN" 
 LOG_FILE="/your_monitor.log" 
 TEMP_FILE="/your_temp_log"
 LAG_THRESHOLD=500000
