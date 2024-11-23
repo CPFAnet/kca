@@ -154,3 +154,6 @@ primary->secondary.sync.topic.configs.enabled = true
 primary->secondary.emit.heartbeats.enabled = true
 replication.policy.class = org.apache.kafka.connect.mirror.DefaultReplicationPolicy
 ###
+
+For commands, please refer to the book.
+
