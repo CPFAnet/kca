@@ -140,3 +140,17 @@ rules:
     type: GAUGE
     help: "JVM Heap Memory Usage"
 ###
+
+oss_mirrormaker2.properties
+###
+clusters = primary, secondary
+primary.bootstrap.servers = xxx.xxx.xxx:yyy,xxx.xxx.xxx:yyy,xxx.xxx.xxx:yyy
+secondary.bootstrap.servers = 1xxx.xxx.xxx:yyy,xxx.xxx.xxx:yyy,xxx.xxx.xxx:yyy
+primary->secondary.enabled = true
+primary->secondary.topics = .*
+primary->secondary.sync.topic.acls.enabled = true 
+primary->secondary.sync.group.offsets.enabled = true 
+primary->secondary.sync.topic.configs.enabled = true
+primary->secondary.emit.heartbeats.enabled = true
+replication.policy.class = org.apache.kafka.connect.mirror.DefaultReplicationPolicy
+###
